@@ -1,10 +1,11 @@
 from tkinter import *
+from database import *
 
 # Create Object
 root = Tk()
 
 # Set geometry
-root.geometry('400x500')
+root.geometry('500x600')
 
 # Information List
 datas = []
@@ -27,8 +28,10 @@ def view():
 
 # Delete Information
 def delete():
-	del datas[int(select.curselection()[0])]
-	update_book()
+    x=datas[int(select.curselection()[0])]
+    deletedata(x[0],x[1],x[2],x[3],x[4])
+    del datas[int(select.curselection()[0])]
+    update_book()
 
 def reset():
 	Name.set('')
@@ -42,6 +45,8 @@ def update_book():
 	select.delete(0,END)
 	for n,p,a,g,h in datas:
 		select.insert(END, n)
+		insertdata(n,p,a,g,h)
+		
 
 # Add Buttons, Label, ListBox
 Name = StringVar()
@@ -80,16 +85,17 @@ Label(frame4, text = 'Address', font='arial 12 bold').pack(side=LEFT)
 address = Text(frame4,width=37,height=10)
 address.pack()
 
-Button(root,text="Add",font="arial 12 bold",command=add).place(x= 100, y=270)
-Button(root,text="View",font="arial 12 bold",command=view).place(x= 100, y=310)
-Button(root,text="Delete",font="arial 12 bold",command=delete).place(x= 100, y=350)
-Button(root,text="Reset",font="arial 12 bold",command=reset).place(x= 100, y=390)
+Button(root,text="Add",font="arial 12 bold",command=add).place(x= 50, y=320)
+Button(root,text="View",font="arial 12 bold",command=view).place(x= 50, y=360)
+Button(root,text="Delete",font="arial 12 bold",command=delete).place(x= 50, y=400)
+Button(root,text="Reset",font="arial 12 bold",command=reset).place(x= 50, y=440)
 
 scroll_bar = Scrollbar(root, orient=VERTICAL)
 select = Listbox(root, yscrollcommand=scroll_bar.set, height=12)
 scroll_bar.config (command=select.yview)
 scroll_bar.pack(side=RIGHT, fill=Y)
-select.place(x=200,y=260)
+select.place(x=200,y=320)
 
 # Execute Tkinter
 root.mainloop()
+from database import *
